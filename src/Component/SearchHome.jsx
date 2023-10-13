@@ -29,11 +29,24 @@ function SearchHome() {
       });
   };
 
-  const addToFavorites = () => {
+  const addToFavorites = async () => {
     if (currentResult) {
-      setFavorites([...favorites, currentResult]); // Add the current movie to favorites
+      try {
+        const response = await axios.post('http://localhost:3001/mark-as-favorite', {
+          movieId: currentResult.imdbID,
+        });
+  
+        if (response.status === 200) {
+          setFavorites([...favorites, currentResult]);
+        } else {
+          console.error('Error saving the movie as a favorite');
+        }
+      } catch (error) {
+        console.error('Error:', error);
+      }
     }
   };
+  
 
   return (
     <div>
