@@ -31,13 +31,14 @@ function SearchHome() {
 
   const addToFavorites = async () => {
     if (currentResult) {
+        setFavorites([...favorites, currentResult]);
       try {
         const response = await axios.post('http://localhost:3001/mark-as-favorite', {
           movieId: currentResult.imdbID,
         });
   
         if (response.status === 200) {
-          setFavorites([...favorites, currentResult]);
+          console.log('success saving the movie as a favorite');
         } else {
           console.error('Error saving the movie as a favorite');
         }
